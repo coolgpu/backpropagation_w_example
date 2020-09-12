@@ -413,37 +413,29 @@ From Figure 2, we see that, given \({x_{c,i}}\), it has only 3 direct contributi
 
 <p>To serve as a reference for comparison, the same network was also implemented using PyTorch’s built-in modules of BatchNorm, Sigmoid and MSELoss. The network output, loss, gradients of the loss w.r.t. \(\vec w\), \(\vec \beta \) and \(\vec x\) from the custom implementations were compared to the reference and the results matched. </p>
 
-<p>You can find <a href="https://github.com/coolgpu/backpropagation_example/blob/master/src/batchnorm_sigmoid_mse_network.py">the source code on GitHub</a>. </p>
+<p>You can find <a href="https://github.com/coolgpu/backpropagation_w_example/blob/master/src/batchnorm_sigmoid_mse_network.py">the source code on GitHub</a>. </p>
 
-<pre class="pre-scrollable"><code class="python">
-	""""
-	Demonstrate custom implementation of forward pass and backward propagation
-	of a BatchNorm-Sigmoid-MSE neural network
-	"""
-	import torch
-
-
-
-</code></pre>
 
 <h3><a name="_Summary">4. Summary </h3>
 <p>In this post, we used a simple BatchNorm-Sigmoid-MSELoss network to demonstrate how to use the chain rule to derive gradients in backpropagation and how to implement the custom autograd functions. We hope that, by going over this example, it can help obtain a deeper understanding of the fundamentals of neural networks, especially about backpropagation. </p>
 
 <h3><a name="_Extra">5. Extra</h3> 
 <p>In the derivation above we found that the partial derivatives of the biased variance \({\sigma ^2}\) w.r.t to the input \(\vec x\) and mean \(\mu \) are \(\frac{{\partial {\sigma ^2}}}{{\partial {x_i}}} = \frac{{2\left( {{x_i} - \mu } \right)}}{N}\) and \(\frac{{\partial {\sigma ^2}}}{{\partial \mu }} = 0\), respectively. If it sounds a little bit surprising to see these results and especially \(\frac{{\partial {\sigma ^2}}}{{\partial \mu }} = 0\), you can write a few lines of Python codes to verify it, just as below.</p>
-<pre class="pre-scrollable"><code class="python">
-	import torch
-	x = torch.rand(10, requires_grad=True, dtype=torch.float64)
-	m = x.mean()
-	m.retain_grad()
-	v = ((x-m)**2).sum()/x.numel()
-	v.backward()
-	manual_grad_dvdx = (x-m)*2/x.numel()
-	print('dv/dm  = ', m.grad)
-	print('torch  dv/dx= ', x.grad.detach().numpy())
-	print('manual dv/dx= ', manual_grad_dvdx.detach().numpy())
-	
-</code></pre>
+<pre class="pre-scrollable">
+	<code class="python">
+		import torch
+		
+		x = torch.rand(10, requires_grad=True, dtype=torch.float64)
+		m = x.mean()
+		m.retain_grad()
+		v = ((x-m)**2).sum()/x.numel()
+		v.backward()
+		manual_grad_dvdx = (x-m)*2/x.numel()
+		print('dv/dm  = ', m.grad)
+		print('torch  dv/dx= ', x.grad.detach().numpy())
+		print('manual dv/dx= ', manual_grad_dvdx.detach().numpy())
+	</code>
+</pre>
 
 
 <!-- begin wwww.htmlcommentbox.com -->
