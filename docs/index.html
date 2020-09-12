@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Understanding of Backpropagation of Neural Network</title>
+	<title>Understanding Backpropagation of Neural Network</title>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 	<script id="MathJax-script" async
 		  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
@@ -14,9 +14,6 @@
 			font-family: sans-serif;
 			font-size: 14px;
 		}
-		<!-- .tab {  -->
-		<!-- margin-left: 40px;  -->
-		<!-- } -->
 		.equation {
 			text-align: center;
 			align-items: center;
@@ -370,7 +367,7 @@ From Figure 2, we see that, given \({x_{c,i}}\), it has only 3 direct contributi
 	<span class="ref-num">(29)</span>
 </div>
 
-<p>Equation (29) is identical to Equation (22): two solutions, the same answer. Derivation is done! </p>
+<p>Equation (29) is identical to Equation (22): two solutions, the same answer. We took this effort to demonstrate that a problem can be solved using different solutions. Derivation is done! </p>
 
 <h3><a name="_Custom_implementations_and_validation"></a>3. Custom implementations and validation  </h3>
 <p>Two separate implementations of the forward pass, loss calculation, and backpropagation are demonstrated in this post. The 1st one uses PyTorch and the 2nd one uses Numpy. The functions and corresponding equations are summarized in Table 1. </p>
