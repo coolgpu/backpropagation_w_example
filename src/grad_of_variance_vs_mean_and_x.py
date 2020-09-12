@@ -1,0 +1,10 @@
+import torch
+x = torch.rand(10, requires_grad=True, dtype=torch.float64)
+m = x.mean()
+m.retain_grad()
+v = ((x-m)**2).sum()/x.numel()
+v.backward()
+manual_grad_dvdx = (x-m)*2/x.numel()
+print('dv/dm  = ', m.grad)
+print('torch  dv/dx= ', x.grad.detach().numpy())
+print('manual dv/dx= ', manual_grad_dvdx.detach().numpy())
